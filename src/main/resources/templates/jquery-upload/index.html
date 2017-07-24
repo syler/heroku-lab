@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>upload with jquery</title>
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/global.css"/>
+    <script type="text/javascript">
+        function uploadfile() {
+            var formData = new FormData();
+            $.each($("input[type='file']")[0].files, function (i, file) {
+                formData.append('upload-file', file);
+            });
+            $.ajax({
+                url: "/jquery-upload/upload",
+                method: "post",
+                data: formData,
+                processData: false,
+                contentType: false,
+            }).done(function (res) {
+                if (res.success) {
+                    $("#message").append("<span>" + res.message + "</span>");
+                    $.each(res.files, function (i, f) {
+                        $("#message").append("<div><a href='/images/" + f + "' target='_blank'>" + f + "</a></div>");
+                    })
+
+                    $("#message").addClass("greenMessage");
+                    $("#message").removeClass("errorMessage");
+                } else {
+                    $("#message").text("cannot upload files, reason: " + res.message);
+                    $("#message").addClass("errorMessage");
+                    $("#message").removeClass("greenMessage");
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<h2>upload with jquery</h2>
+<div>
+
+    <label for="uploadfile">choose file</label> <input id="uploadfile" type="file"
+                                                       multiple="multiple"/>
+    <br/>
+
+    <button id="btnupload" onclick="uploadfile()">upload</button>
+</div>
+<div id="message"></div>
+</body>
+</html>
