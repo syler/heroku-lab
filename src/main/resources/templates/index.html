@@ -6,10 +6,15 @@
 </head>
 <body>
 欢迎来<a href="https://www.1few.com">${domain}</a>的实验室。
-<h3>目录</h3>
+<h3>Spring Boot学习目录</h3>
 <ul>
-    <li><a href="/jquery-upload">jQuery upload sample</a></li>
-    <li><a href="/users/">use postgres db</a> </li>
+    <#list chapters as chapter>
+        <li>
+            <a href="${chapter.demo.link}">${chapter.demo.title}</a>，文章介绍 <a
+                href="${chapter.article.link}">${chapter.article.title}</a>，下载 <a
+                href="${chapter.source.link}" target="_blank">${chapter.source.title}</a></li>
+    </#list>
+
 </ul>
 </body>
 </html>
